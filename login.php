@@ -73,12 +73,6 @@ $timeout = isset($_GET['timeout']) ? true : false;
                 
                 <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
             </form>
-            
-            <div class="login-info">
-                <p><strong>Comptes de test :</strong></p>
-                <p>Admin : <code>admin</code> / <code>admin123</code></p>
-                <p>Client : <code>client_test</code> / <code>client123</code></p>
-            </div>
         </div>
     </div>
 </body>
