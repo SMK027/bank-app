@@ -69,204 +69,227 @@ $pageTitle = 'Prélèvements';
 include 'includes/header.php';
 ?>
 
-<style>
-    .prelevements-tabs {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-        border-bottom: 2px solid #ddd;
-    }
+    <style>
+        .prelevements-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
 
-    .tab-btn {
-        padding: 10px 20px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        border-bottom: 3px solid transparent;
-        transition: all 0.3s;
-    }
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
 
-    .tab-btn.active {
-        border-bottom-color: #3498db;
-        color: #3498db;
-        font-weight: bold;
-    }
+        .tab-btn:hover {
+            background: #f5f5f5;
+        }
 
-    .tab-content {
-        display: none;
-    }
+        .tab-btn.active {
+            border-bottom-color: #3498db;
+            color: #3498db;
+            font-weight: bold;
+        }
 
-    .tab-content.active {
-        display: block;
-    }
+        .tab-content {
+            display: none;
+        }
 
-    .prelevement-card {
-        background: #f8f9fa;
-        border-left: 4px solid #f39c12;
-        padding: 15px;
-        margin-bottom: 15px;
-        border-radius: 4px;
-    }
+        .tab-content.active {
+            display: block;
+        }
 
-    .prelevement-card.execute {
-        border-left-color: #27ae60;
-        background: #eafaf1;
-    }
+        .prelevement-card {
+            background: #f8f9fa;
+            border-left: 4px solid #f39c12;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
 
-    .prelevement-card.annule {
-        border-left-color: #95a5a6;
-        background: #ecf0f1;
-    }
+        .prelevement-card.execute {
+            border-left-color: #27ae60;
+            background: #eafaf1;
+        }
 
-    .prelevement-card.erreur {
-        border-left-color: #e74c3c;
-        background: #fadbd8;
-    }
+        .prelevement-card.annule {
+            border-left-color: #95a5a6;
+            background: #ecf0f1;
+        }
 
-    .prelevement-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-    }
+        .prelevement-card.erreur {
+            border-left-color: #e74c3c;
+            background: #fadbd8;
+        }
 
-    .prelevement-montant {
-        font-size: 1.5em;
-        font-weight: bold;
-        color: #e74c3c;
-    }
+        .prelevement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
-    .prelevement-details {
-        font-size: 0.9em;
-        color: #555;
-    }
+        .prelevement-montant {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #e74c3c;
+        }
 
-    .prelevement-details strong {
-        color: #2c3e50;
-    }
-</style>
+        .prelevement-details {
+            font-size: 0.9em;
+            color: #555;
+        }
 
-<div class="page-content">
-    <h1>Prélèvements</h1>
+        .prelevement-details strong {
+            color: #2c3e50;
+        }
+    </style>
 
-    <?php if (empty($comptesUtilisateur)): ?>
-        <div class="alert alert-warning">
-            Vous n'avez aucun compte.
-        </div>
-    <?php else: ?>
+    <div class="page-content">
+        <h1>Prélèvements</h1>
 
-        <div class="prelevements-tabs">
-            <button class="tab-btn active" onclick="switchTab('avenir')">
-                Prélèvements à venir (<?php echo count($prelevementsAvenir); ?>)
-            </button>
-            <button class="tab-btn" onclick="switchTab('historique')">
-                Historique (<?php echo count($prelevementsHistorique); ?>)
-            </button>
-        </div>
+        <?php if (empty($comptesUtilisateur)): ?>
+            <div class="alert alert-warning">
+                Vous n'avez aucun compte.
+            </div>
+        <?php else: ?>
 
-        <!-- Onglet Prélèvements à venir -->
-        <div id="tab-avenir" class="tab-content active">
-            <h2>Prélèvements à venir</h2>
+            <div class="prelevements-tabs">
+                <button class="tab-btn active" data-tab="avenir">
+                    Prélèvements à venir (<?php echo count($prelevementsAvenir); ?>)
+                </button>
+                <button class="tab-btn" data-tab="historique">
+                    Historique (<?php echo count($prelevementsHistorique); ?>)
+                </button>
+            </div>
 
-            <?php if (empty($prelevementsAvenir)): ?>
-                <p>Aucun prélèvement prévu sur vos comptes.</p>
-            <?php else: ?>
-                <?php foreach ($prelevementsAvenir as $prelevement): ?>
-                    <div class="prelevement-card">
-                        <div class="prelevement-header">
-                            <div>
-                                <strong>Date d'exécution :</strong> <?php echo formatDate($prelevement['date_execution']); ?>
+            <!-- Onglet Prélèvements à venir -->
+            <div id="tab-avenir" class="tab-content active">
+                <h2>Prélèvements à venir</h2>
+
+                <?php if (empty($prelevementsAvenir)): ?>
+                    <p>Aucun prélèvement prévu sur vos comptes.</p>
+                <?php else: ?>
+                    <?php foreach ($prelevementsAvenir as $prelevement): ?>
+                        <div class="prelevement-card">
+                            <div class="prelevement-header">
+                                <div>
+                                    <strong>Date d'exécution :</strong> <?php echo formatDate($prelevement['date_execution']); ?>
+                                </div>
+                                <div class="prelevement-montant">
+                                    - <?php echo formatMontant($prelevement['montant']); ?>
+                                </div>
                             </div>
-                            <div class="prelevement-montant">
-                                - <?php echo formatMontant($prelevement['montant']); ?>
+
+                            <div class="prelevement-details">
+                                <p><strong>Compte débité :</strong> <?php echo e($prelevement['compte_source_numero'] . ' (' . ucfirst($prelevement['compte_source_type']) . ')'); ?></p>
+
+                                <?php if ($prelevement['compte_destinataire_numero']): ?>
+                                    <p><strong>Compte destinataire :</strong> <?php echo e($prelevement['compte_destinataire_numero']); ?></p>
+                                <?php else: ?>
+                                    <p><strong>Destinataire :</strong> <span class="badge badge-secondary">Banque</span></p>
+                                <?php endif; ?>
+
+                                <p><strong>Descriptif :</strong> <?php echo e($prelevement['descriptif']); ?></p>
+
+                                <p><small><strong>Créé le :</strong> <?php echo formatDate(date('Y-m-d', strtotime($prelevement['date_creation']))); ?></small></p>
                             </div>
                         </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
 
-                        <div class="prelevement-details">
-                            <p><strong>Compte débité :</strong> <?php echo e($prelevement['compte_source_numero'] . ' (' . ucfirst($prelevement['compte_source_type']) . ')'); ?></p>
+            <!-- Onglet Historique -->
+            <div id="tab-historique" class="tab-content">
+                <h2>Historique des prélèvements</h2>
 
-                            <?php if ($prelevement['compte_destinataire_numero']): ?>
-                                <p><strong>Compte destinataire :</strong> <?php echo e($prelevement['compte_destinataire_numero']); ?></p>
-                            <?php else: ?>
-                                <p><strong>Destinataire :</strong> <span class="badge badge-secondary">Banque</span></p>
-                            <?php endif; ?>
-
-                            <p><strong>Descriptif :</strong> <?php echo e($prelevement['descriptif']); ?></p>
-
-                            <p><small><strong>Créé le :</strong> <?php echo formatDate(date('Y-m-d', strtotime($prelevement['date_creation']))); ?></small></p>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-
-        <!-- Onglet Historique -->
-        <div id="tab-historique" class="tab-content">
-            <h2>Historique des prélèvements</h2>
-
-            <?php if (empty($prelevementsHistorique)): ?>
-                <p>Aucun prélèvement dans l'historique.</p>
-            <?php else: ?>
-                <?php foreach ($prelevementsHistorique as $prelevement): ?>
-                    <div class="prelevement-card <?php echo $prelevement['statut']; ?>">
-                        <div class="prelevement-header">
-                            <div>
-                                <strong>Date d'exécution :</strong> <?php echo formatDate($prelevement['date_execution_reelle'] ? date('Y-m-d', strtotime($prelevement['date_execution_reelle'])) : $prelevement['date_execution']); ?>
-                                <span class="badge badge-<?php
-                                echo $prelevement['statut'] === 'execute' ? 'success' :
-                                    ($prelevement['statut'] === 'annule' ? 'secondary' : 'danger');
-                                ?>">
+                <?php if (empty($prelevementsHistorique)): ?>
+                    <p>Aucun prélèvement dans l'historique.</p>
+                <?php else: ?>
+                    <?php foreach ($prelevementsHistorique as $prelevement): ?>
+                        <div class="prelevement-card <?php echo $prelevement['statut']; ?>">
+                            <div class="prelevement-header">
+                                <div>
+                                    <strong>Date d'exécution :</strong> <?php echo formatDate($prelevement['date_execution_reelle'] ? date('Y-m-d', strtotime($prelevement['date_execution_reelle'])) : $prelevement['date_execution']); ?>
+                                    <span class="badge badge-<?php
+                                    echo $prelevement['statut'] === 'execute' ? 'success' :
+                                        ($prelevement['statut'] === 'annule' ? 'secondary' : 'danger');
+                                    ?>">
                             <?php echo ucfirst($prelevement['statut']); ?>
                         </span>
+                                </div>
+                                <div class="prelevement-montant">
+                                    <?php if ($prelevement['statut'] === 'execute'): ?>
+                                        - <?php echo formatMontant($prelevement['montant']); ?>
+                                    <?php else: ?>
+                                        <?php echo formatMontant($prelevement['montant']); ?>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                            <div class="prelevement-montant">
-                                <?php if ($prelevement['statut'] === 'execute'): ?>
-                                    - <?php echo formatMontant($prelevement['montant']); ?>
+
+                            <div class="prelevement-details">
+                                <p><strong>Compte débité :</strong> <?php echo e($prelevement['compte_source_numero'] . ' (' . ucfirst($prelevement['compte_source_type']) . ')'); ?></p>
+
+                                <?php if ($prelevement['compte_destinataire_numero']): ?>
+                                    <p><strong>Compte destinataire :</strong> <?php echo e($prelevement['compte_destinataire_numero']); ?></p>
                                 <?php else: ?>
-                                    <?php echo formatMontant($prelevement['montant']); ?>
+                                    <p><strong>Destinataire :</strong> <span class="badge badge-secondary">Banque</span></p>
+                                <?php endif; ?>
+
+                                <p><strong>Descriptif :</strong> <?php echo e($prelevement['descriptif']); ?></p>
+
+                                <?php if ($prelevement['statut'] === 'erreur' && $prelevement['message_erreur']): ?>
+                                    <p class="text-danger"><strong>Erreur :</strong> <?php echo e($prelevement['message_erreur']); ?></p>
                                 <?php endif; ?>
                             </div>
                         </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
 
-                        <div class="prelevement-details">
-                            <p><strong>Compte débité :</strong> <?php echo e($prelevement['compte_source_numero'] . ' (' . ucfirst($prelevement['compte_source_type']) . ')'); ?></p>
+        <?php endif; ?>
+    </div>
 
-                            <?php if ($prelevement['compte_destinataire_numero']): ?>
-                                <p><strong>Compte destinataire :</strong> <?php echo e($prelevement['compte_destinataire_numero']); ?></p>
-                            <?php else: ?>
-                                <p><strong>Destinataire :</strong> <span class="badge badge-secondary">Banque</span></p>
-                            <?php endif; ?>
+    <script>
+        // Attendre que le DOM soit chargé
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer tous les boutons d'onglets
+            const tabButtons = document.querySelectorAll('.tab-btn');
 
-                            <p><strong>Descriptif :</strong> <?php echo e($prelevement['descriptif']); ?></p>
+            // Ajouter un écouteur d'événement à chaque bouton
+            tabButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Récupérer le nom de l'onglet depuis l'attribut data-tab
+                    const tabName = this.getAttribute('data-tab');
 
-                            <?php if ($prelevement['statut'] === 'erreur' && $prelevement['message_erreur']): ?>
-                                <p class="text-danger"><strong>Erreur :</strong> <?php echo e($prelevement['message_erreur']); ?></p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
+                    // Désactiver tous les boutons
+                    tabButtons.forEach(function(btn) {
+                        btn.classList.remove('active');
+                    });
 
-    <?php endif; ?>
-</div>
+                    // Masquer tous les contenus
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(function(content) {
+                        content.classList.remove('active');
+                    });
 
-<script>
-    function switchTab(tabName) {
-        // Masquer tous les contenus
-        document.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.remove('active');
+                    // Activer le bouton cliqué
+                    this.classList.add('active');
+
+                    // Afficher le contenu correspondant
+                    const targetTab = document.getElementById('tab-' + tabName);
+                    if (targetTab) {
+                        targetTab.classList.add('active');
+                    }
+                });
+            });
         });
-
-        // Désactiver tous les boutons
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-
-        // Activer le contenu et le bouton sélectionnés
-        document.getElementById('tab-' + tabName).classList.add('active');
-        event.currentTarget.classList.add('active');
-    }
-</script>
+    </script>
 
 <?php include 'includes/footer.php'; ?>
