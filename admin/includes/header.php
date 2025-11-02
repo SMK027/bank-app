@@ -17,6 +17,7 @@
             <li><a href="<?php echo BASE_URL; ?>/admin/comptes.php">Comptes</a></li>
             <li><a href="<?php echo BASE_URL; ?>/admin/operations.php">Opérations</a></li>
             <li><a href="<?php echo BASE_URL; ?>/admin/credits.php">Crédits</a></li>
+            <li><a href="<?php echo BASE_URL; ?>/admin/prelevements.php">Prélèvements</a></li>
             <li><a href="<?php echo BASE_URL; ?>/admin/procurations.php">Procurations</a></li>
             <li><a href="<?php echo BASE_URL; ?>/admin/messages.php">
                 Messages

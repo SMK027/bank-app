@@ -16,6 +16,7 @@
             <li><a href="<?php echo BASE_URL; ?>/client/comptes.php">Mes comptes</a></li>
             <li><a href="<?php echo BASE_URL; ?>/client/operations.php">Opérations</a></li>
             <li><a href="<?php echo BASE_URL; ?>/client/virements.php">Virements</a></li>
+            <li><a href="<?php echo BASE_URL; ?>/client/prelevements.php">Prélèvements</a></li>
             <li><a href="<?php echo BASE_URL; ?>/client/recherche.php">Recherche</a></li>
             <li><a href="<?php echo BASE_URL; ?>/client/messages.php">
                 Messages
