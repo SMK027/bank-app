@@ -8,16 +8,16 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../config/config.php';
 
 // Configuration JWT
-define('JWT_SECRET', 'VOTRE_CLE_SECRETE_JWT_A_CHANGER'); // À CHANGER en production
+define('JWT_SECRET', 'FAG98498qsdsf4g98s5df4dsq8e9df54yç'); // À CHANGER en production
 define('JWT_ALGORITHM', 'HS256');
 define('JWT_ACCESS_TOKEN_EXPIRY', 3600); // 1 heure
 define('JWT_REFRESH_TOKEN_EXPIRY', 604800); // 7 jours
 
 // Configuration Discord OAuth2
-define('DISCORD_CLIENT_ID', 'VOTRE_CLIENT_ID_DISCORD');
-define('DISCORD_CLIENT_SECRET', 'VOTRE_CLIENT_SECRET_DISCORD');
+define('DISCORD_CLIENT_ID', '1436101784564138154');
+define('DISCORD_CLIENT_SECRET', 'ribWOuJXpS5PYc-yujYgQ4WIlE9mRG3q');
 define('DISCORD_REDIRECT_URI', BASE_URL . '/api/auth/discord/callback');
-define('DISCORD_BOT_TOKEN', 'VOTRE_BOT_TOKEN_DISCORD');
+define('DISCORD_BOT_TOKEN', 'MTQzNjEwMTc4NDU2NDEzODE1NA.GD06l1.eDUaOK0Hpqo-Crl9LcItwsX7kY5rESaF1cqpXU');
 
 // Configuration API
 define('API_VERSION', 'v1');

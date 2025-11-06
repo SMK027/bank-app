@@ -71,6 +71,10 @@ $user = $stmt->fetch();
 
 $pageTitle = 'Mon profil';
 include 'includes/header.php';
+// Récupérer le statut de liaison Discord
+$stmt = $db->prepare("SELECT discord_username FROM discord_links WHERE user_id = ? AND active = TRUE");
+$stmt->execute([$_SESSION['user_id']]);
+$discordLink = $stmt->fetch();
 ?>
 
 <div class="page-content">
@@ -88,6 +92,22 @@ include 'includes/header.php';
     <div class="profile-sections">
         <div class="profile-section">
             <h2>Informations personnelles</h2>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5>🎮 Liaison Discord</h5>
+                </div>
+                <div class="card-body">
+                    <?php if ($discordLink): ?>
+                        <p>Votre compte est lié à Discord: <strong><?= htmlspecialchars($discordLink['discord_username']) ?></strong></p>
+                        <a href="<?= BASE_URL ?>/api/user/discord/unlink" class="btn btn-danger">Délier mon compte Discord</a>
+                    <?php else: ?>
+                        <p>Liez votre compte Discord pour utiliser le bot bancaire.</p>
+                        <a href="<?= BASE_URL ?>/api/auth/discord/authorize" class="btn btn-primary">Lier mon compte Discord</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            ?>
             <form method="POST" action="">
                 <input type="hidden" name="action" value="update_profile">
                 
