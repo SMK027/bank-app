@@ -37,7 +37,7 @@ Bot Discord pour interagir avec l'application bancaire Bank App.
 
 2. **Configurer les variables d'environnement**
    ```bash
-   cp .env.example .env
+   cp .env .env
    nano .env
    ```
    
