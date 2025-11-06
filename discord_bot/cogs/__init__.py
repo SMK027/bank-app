@@ -1,0 +1,3 @@
+"""
+Package des cogs Discord
+"""
