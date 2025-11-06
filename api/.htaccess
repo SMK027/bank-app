@@ -1,0 +1,29 @@
+# Configuration Apache pour l'API REST
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /api/
+    
+    # Rediriger toutes les requêtes vers index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Headers de sécurité
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Désactiver l'affichage des erreurs en production
+php_flag display_errors Off
+php_flag display_startup_errors Off
+
+# Activer le logging des erreurs
+php_flag log_errors On
+
+# Limiter la taille des requêtes
+php_value upload_max_filesize 2M
+php_value post_max_size 2M
